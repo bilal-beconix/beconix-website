@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <!-- Beconix Logo - Black X Design -->
+  <defs>
+    <style>
+      .logo-fill { fill: #000000; }
+    </style>
+  </defs>
+  
+  <!-- Left Triangle -->
+  <polygon points="175,100 175,250 305,250" class="logo-fill"/>
+  
+  <!-- Right Triangle -->
+  <polygon points="305,100 175,250 305,250" class="logo-fill"/>
+  
+  <!-- Bottom Left Triangle -->
+  <polygon points="175,250 305,400 175,400" class="logo-fill"/>
+  
+  <!-- Bottom Right Triangle -->
+  <polygon points="305,250 305,400 435,400" class="logo-fill"/>
+  
+  <!-- Top Right Triangle (for the X effect) -->
+  <polygon points="305,100 435,100 305,250" class="logo-fill"/>
+</svg>

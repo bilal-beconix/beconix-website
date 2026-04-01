@@ -1,0 +1,993 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beconix LLC | AI Receptionist</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/static/logo.svg">
+    <link rel="shortcut icon" type="image/svg+xml" href="/static/logo.svg">
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #fafbfc; }
+        
+        /* Navigation Links */
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+        .nav-links a {
+            color: #374151;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            text-decoration: none;
+        }
+        .nav-links a:hover {
+            color: #3b82f6;
+        }
+        
+        /* Integration Marquee Animation */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            width: 100%;
+            padding: 20px 0;
+            background: white;
+            border-top: 1px solid #eaeaea;
+            border-bottom: 1px solid #eaeaea;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 30s linear infinite;
+        }
+        .marquee-content img, .marquee-content span {
+            display: inline-flex;
+            align-items: center;
+            padding: 10px 24px;
+            margin: 0 10px;
+            background: #fff;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            font-weight: 500;
+            color: #333;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* 4-Step Loop Animation */
+        .step-item {
+            opacity: 0.4;
+            transition: all 0.4s ease;
+        }
+        .step-item.active {
+            opacity: 1;
+            transform: translateY(-5px);
+        }
+        .step-icon-wrapper {
+            width: 60px; height: 60px;
+            border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            border: 2px solid #e5e7eb;
+            transition: all 0.4s ease;
+        }
+        .step-item.active .step-icon-wrapper {
+            border-color: #3b82f6;
+            background-color: #eff6ff;
+            box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1);
+        }
+        
+        /* Logo Styling - Perfect Display */
+        img[alt="Beconix Logo"] {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            image-rendering: crisp-edges;
+            image-rendering: -webkit-optimize-contrast;
+        }
+        
+        header .flex-shrink-0 {
+            background: linear-gradient(135deg, #f5f5f5 0%, #f0f0f0 100%);
+            border: 1px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+        
+        header .flex-shrink-0:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Specialty Cards */
+        .specialty-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            background: white;
+            transition: all 0.3s ease;
+        }
+        .specialty-card:hover {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+        .specialty-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .specialty-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #9ca3af;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.5rem;
+        }
+        .specialty-heading {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1f2937;
+        }
+        .specialty-features {
+            list-style: none;
+            padding: 0;
+            margin: 1rem 0;
+        }
+        .specialty-features li {
+            font-size: 0.875rem;
+            color: #4b5563;
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+        .specialty-features li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #3b82f6;
+            font-weight: bold;
+        }
+        .specialty-flow {
+            background: #f9fafb;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        .specialty-flow-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #6b7280;
+            margin-bottom: 0.75rem;
+        }
+        .specialty-flow ol {
+            list-style: decimal;
+            margin-left: 1.25rem;
+        }
+        .specialty-flow li {
+            font-size: 0.875rem;
+            color: #3b82f6;
+            margin-bottom: 0.25rem;
+        }
+
+        /* Metrics Bar */
+        .metrics-bar {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            color: white;
+        }
+
+        /* HIPAA Section */
+        .hipaa-split {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        @media (max-width: 768px) {
+            .hipaa-split {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+        }
+        .hipaa-feature {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .hipaa-icon {
+            flex-shrink: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 0.5rem;
+            background: #eff6ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+        }
+        .hipaa-content h3 {
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        .hipaa-content p {
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+
+        /* FAQ Subsections */
+        #faq details {
+            transition: all 0.2s ease;
+        }
+        #faq summary:hover {
+            background-color: #f9fafb;
+        }
+    </style>
+</head>
+<body class="text-gray-900 pb-24">
+
+    <!-- Header -->
+    <header class="bg-white border-b py-4 px-8 flex justify-between items-center sticky top-0 z-50">
+        <div class="flex items-center gap-4">
+            <div class="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 flex items-center justify-center bg-gray-50 rounded-lg overflow-hidden">
+                <img src="/static/logo.svg" alt="Beconix Logo" class="w-10 h-10 md:w-12 md:h-12 object-contain" loading="eager"> 
+            </div>
+            <div>
+                <h1 class="font-bold text-lg md:text-xl leading-tight">BECONIX LLC</h1>
+            </div>
+        </div>
+        
+        <div class="nav-links hidden lg:flex">
+            <a href="#how-it-works">How It Works</a>
+            <a href="#specialties">Specialty Solutions</a>
+            <a href="#case-studies">Case Studies</a>
+            <a href="#faq">FAQ</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="max-w-6xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <div>
+            <span class="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">AI Phone Agents</span>
+            <h2 class="text-5xl font-bold mt-6 leading-tight text-gray-900">Never Miss a Patient Call Again.</h2>
+            <p class="mt-4 text-xl text-gray-900">Custom-built AI Phone Agents engineered around your practice's exact workflows. Not a template. Not a SaaS subscription. A voice agent built by a team that knows healthcare, built to last.</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-xl border border-gray-100 relative">
+            <div class="flex justify-between items-start border-b pb-4 mb-4">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 text-xl">🤖</div>
+                    <div>
+                        <h4 class="font-bold">Amelia, AI Receptionist</h4>
+                        <p class="text-green-500 text-sm flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-green-500"></span> Live call in progress</p>
+                    </div>
+                </div>
+            </div>
+            <div class="space-y-4 text-sm">
+                <div class="bg-gray-100 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl w-3/4">
+                    Thanks for calling Max Dental Group. This is Amelia, how can I help you today?
+                </div>
+                <div class="bg-blue-600 text-white p-3 rounded-tl-xl rounded-br-xl rounded-bl-xl w-3/4 ml-auto">
+                    I'd like to book an appointment for next week.
+                </div>
+                <div class="bg-gray-100 p-3 rounded-tr-xl rounded-br-xl rounded-bl-xl w-3/4">
+                    I can help with that! Are you a new or returning patient?
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Metrics Bar -->
+    <section class="metrics-bar py-12">
+        <div class="max-w-6xl mx-auto px-4 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <div class="text-4xl md:text-5xl font-bold">24/7</div>
+                <div class="text-sm md:text-base mt-2 text-blue-100">Always available, never on hold</div>
+            </div>
+            <div>
+                <div class="text-4xl md:text-5xl font-bold">&lt;1s</div>
+                <div class="text-sm md:text-base mt-2 text-blue-100">Call answer time</div>
+            </div>
+            <div>
+                <div class="text-4xl md:text-5xl font-bold">94%</div>
+                <div class="text-sm md:text-base mt-2 text-blue-100">Of calls fully automated</div>
+            </div>
+            <div>
+                <div class="text-4xl md:text-5xl font-bold">$0</div>
+                <div class="text-sm md:text-base mt-2 text-blue-100">After-hours staffing cost</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Form Section -->
+    <section class="bg-white py-20 px-4">
+        <div class="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-2xl border border-gray-100 text-center">
+            <h3 class="text-2xl font-bold mb-2">Hear Your AI Receptionist Live</h3>
+            <p class="text-gray-500 text-sm mb-6">Enter your details and speak directly with Amelia.</p>
+            
+            <form id="demoForm" class="space-y-4 text-left">
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Full Name</label>
+                    <input type="text" id="demoName" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Jane Smith">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Company Name</label>
+                    <input type="text" id="demoCompany" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Acme Corp">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Position</label>
+                    <input type="text" id="demoPosition" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Owner / Manager">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Work Email</label>
+                    <input type="email" id="demoEmail" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="jane@acme.com">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-gray-600 mb-1">Phone Number</label>
+                    <input type="tel" id="demoPhone" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="555-0123">
+                </div>
+                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition mt-4">Call Amelia Now &rarr;</button>
+                <p id="formStatus" class="text-sm text-center hidden mt-2"></p>
+            </form>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-20 bg-gray-50" id="how-it-works">
+        <div class="max-w-6xl mx-auto px-4 text-center">
+            <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">How It Works</span>
+            <h2 class="text-4xl font-bold mt-4">Done-for-you, in four steps</h2>
+            <p class="text-gray-600 mt-2 mb-16">We handle everything. You get a custom AI Phone Agent ready in 2 to 4 weeks.</p>
+
+            <div class="grid grid-cols-4 gap-4 relative">
+                <div class="absolute top-8 left-10 right-10 h-0.5 bg-gray-200 z-0 hidden md:block"></div>
+                
+                <div class="step-item text-center relative z-10 active" id="step-1">
+                    <div class="step-icon-wrapper mx-auto bg-white mb-4"><span class="text-blue-600 text-xl">💬</span></div>
+                    <span class="text-blue-600 font-bold text-sm">01</span>
+                    <h4 class="font-bold mt-1">Discovery Call</h4>
+                    <p class="text-xs text-gray-500 mt-2 px-2">We map your exact call flows, edge cases, and existing tools.</p>
+                </div>
+                <div class="step-item text-center relative z-10" id="step-2">
+                    <div class="step-icon-wrapper mx-auto bg-white mb-4"><span class="text-blue-600 text-xl">⚙️</span></div>
+                    <span class="text-blue-600 font-bold text-sm">02</span>
+                    <h4 class="font-bold mt-1">Custom Build</h4>
+                    <p class="text-xs text-gray-500 mt-2 px-2">Engineered for your workflows. Built by our team, done for you.</p>
+                </div>
+                <div class="step-item text-center relative z-10" id="step-3">
+                    <div class="step-icon-wrapper mx-auto bg-white mb-4"><span class="text-blue-600 text-xl">📈</span></div>
+                    <span class="text-blue-600 font-bold text-sm">03</span>
+                    <h4 class="font-bold mt-1">Test & Refine</h4>
+                    <p class="text-xs text-gray-500 mt-2 px-2">Live testing with real scenarios before you go live.</p>
+                </div>
+                <div class="step-item text-center relative z-10" id="step-4">
+                    <div class="step-icon-wrapper mx-auto bg-white mb-4"><span class="text-blue-600 text-xl">🎉</span></div>
+                    <span class="text-blue-600 font-bold text-sm">04</span>
+                    <h4 class="font-bold mt-1">You Own It</h4>
+                    <p class="text-xs text-gray-500 mt-2 px-2">Handover complete. No lock-in, fully supported.</p>
+                </div>
+            </div>
+            
+            <div class="bg-gray-900 text-white rounded-2xl p-8 mt-16 flex flex-col md:flex-row justify-between items-center text-left">
+                <div>
+                    <h3 class="text-2xl font-bold">Ready to see what a custom build looks like?</h3>
+                    <p class="text-gray-400 mt-1">No obligation. 20-minute intro call.</p>
+                </div>
+                <a href="https://cal.com/beconix-bilal/lets-talk" target="_blank" class="mt-4 md:mt-0 bg-white text-gray-900 font-bold py-3 px-6 rounded-lg hover:bg-gray-100 transition">📞 Book a Free Consultation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- HIPAA Compliance -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="hipaa-split">
+                <div>
+                    <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">Compliance & Security</span>
+                    <h2 class="text-4xl font-bold mt-4" style="color: #1f2937;"><span style="color: #3b82f6;">HIPAA compliance</span><br>isn't a footnote.<br>It's our foundation.</h2>
+                    <p class="text-gray-600 mt-4">Healthcare buyers need to know their AI partner takes compliance seriously. We've built our entire stack around this, not as an afterthought, but from day one.</p>
+                    <a href="https://cal.com/beconix-bilal/lets-talk" target="_blank" class="inline-block mt-6 bg-blue-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-blue-700 transition">Book a Free Consultation →</a>
+                </div>
+                <div class="space-y-6">
+                    <div class="hipaa-feature">
+                        <div class="hipaa-icon">🔒</div>
+                        <div class="hipaa-content text-left">
+                            <h3>HIPAA-Ready Architecture</h3>
+                            <p>Built with privacy-first design. We use HIPAA-compliant integration layers (including Keragon) to handle PHI safely.</p>
+                        </div>
+                    </div>
+                    <div class="hipaa-feature">
+                        <div class="hipaa-icon">🛡️</div>
+                        <div class="hipaa-content text-left">
+                            <h3>No PHI Stored in AI Models</h3>
+                            <p>Patient data is never used to train models. Conversations are processed, not retained for AI learning.</p>
+                        </div>
+                    </div>
+                    <div class="hipaa-feature">
+                        <div class="hipaa-icon">👤</div>
+                        <div class="hipaa-content text-left">
+                            <h3>Human Escalation Paths</h3>
+                            <p>Any sensitive or clinical question is immediately routed to a qualified human. AI handles admin, not clinical decisions.</p>
+                        </div>
+                    </div>
+                    <div class="hipaa-feature">
+                        <div class="hipaa-icon">⚡</div>
+                        <div class="hipaa-content text-left">
+                            <h3>Keragon Integration</h3>
+                            <p>HIPAA-compliant workflow automation connecting your AI agent to EHRs, CRMs, and scheduling tools securely.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Specialty Solutions -->
+    <section class="py-20 px-4 bg-gray-50" id="specialties">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">Specialty Solutions</span>
+                <h2 class="text-4xl font-bold mt-4">Built for your type of practice</h2>
+                <p class="text-gray-600 mt-2">We've built agents across these specialties. Each one has different workflows, different edge cases, and different tools. We handle all of it.</p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Dental Practice -->
+                <div class="specialty-card">
+                    <div class="specialty-icon">🦷</div>
+                    <div class="specialty-title">Dental Practices</div>
+                    <h3 class="specialty-heading">Fill chairs automatically</h3>
+                    <ul class="specialty-features">
+                        <li>24/7 appointment booking</li>
+                        <li>New patient onboarding</li>
+                        <li>Insurance verification queries</li>
+                        <li>Recall reminders outbound</li>
+                    </ul>
+                    <div class="specialty-flow">
+                        <div class="specialty-flow-title">EXAMPLE CALL FLOW</div>
+                        <ol>
+                            <li>Greeting</li>
+                            <li>New or existing?</li>
+                            <li>Book / Reschedule</li>
+                            <li>Insurance query</li>
+                            <li>After hours</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- MedSpa -->
+                <div class="specialty-card">
+                    <div class="specialty-icon">✨</div>
+                    <div class="specialty-title">MedSpa</div>
+                    <h3 class="specialty-heading">Handle beauty inquiries 24/7</h3>
+                    <ul class="specialty-features">
+                        <li>Real-time treatment booking</li>
+                        <li>Consultation scheduling</li>
+                        <li>Treatment pricing & packages</li>
+                        <li>Package inquiry routing</li>
+                    </ul>
+                    <div class="specialty-flow">
+                        <div class="specialty-flow-title">EXAMPLE CALL FLOW</div>
+                        <ol>
+                            <li>Greeting</li>
+                            <li>New or existing?</li>
+                            <li>Book / Reschedule</li>
+                            <li>Package inquiry</li>
+                            <li>After hours</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Aesthetics Clinics -->
+                <div class="specialty-card">
+                    <div class="specialty-icon">💅</div>
+                    <div class="specialty-title">Aesthetics Clinics</div>
+                    <h3 class="specialty-heading">Never miss a procedure booking</h3>
+                    <ul class="specialty-features">
+                        <li>Procedure availability lookup</li>
+                        <li>Treatment consultations</li>
+                        <li>Care coordination queries</li>
+                        <li>Aftercare instructions</li>
+                    </ul>
+                    <div class="specialty-flow">
+                        <div class="specialty-flow-title">EXAMPLE CALL FLOW</div>
+                        <ol>
+                            <li>Greeting</li>
+                            <li>New or existing?</li>
+                            <li>Book / Reschedule</li>
+                            <li>Service area</li>
+                            <li>After hours</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <!-- Concierge Medicine -->
+                <div class="specialty-card">
+                    <div class="specialty-icon">🏥</div>
+                    <div class="specialty-title">Concierge Medicine</div>
+                    <h3 class="specialty-heading">Scale intake without scaling headcount</h3>
+                    <ul class="specialty-features">
+                        <li>Member vs non-member detection</li>
+                        <li>Urgent triage routing</li>
+                        <li>Membership inquiry handling</li>
+                        <li>After-hours message taking</li>
+                    </ul>
+                    <div class="specialty-flow">
+                        <div class="specialty-flow-title">EXAMPLE CALL FLOW</div>
+                        <ol>
+                            <li>Greeting</li>
+                            <li>Member check</li>
+                            <li>Book / Transfer</li>
+                            <li>Urgent triage</li>
+                            <li>After hours</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">Features</span>
+            <h2 class="text-4xl font-bold mt-4">Everything you need, built in</h2>
+            <p class="text-gray-600 mt-2 mb-12">Plus unlimited customizations for your practice.</p>
+
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Voice & Conversation</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold text-lg">✓</span>
+                            <div>
+                                <p class="font-bold">Natural Voice</p>
+                                <p class="text-sm text-gray-600">Human-like pauses, filler words, and < 800ms latency</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold text-lg">✓</span>
+                            <div>
+                                <p class="font-bold">Intelligent Routing</p>
+                                <p class="text-sm text-gray-600">Detects intent and routes to right workflow instantly</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold text-lg">✓</span>
+                            <div>
+                                <p class="font-bold">Multi-Language Support</p>
+                                <p class="text-sm text-gray-600">Speak and interact in Spanish, French, Mandarin, and more</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-2xl font-bold mb-6">Integrations & Data</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold text-lg">✓</span>
+                            <div>
+                                <p class="font-bold">Calendar Integration</p>
+                                <p class="text-sm text-gray-600">Books directly into Google Calendar or your scheduling system</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold text-lg">✓</span>
+                            <div>
+                                <p class="font-bold">CRM & EHR Sync</p>
+                                <p class="text-sm text-gray-600">Logs call data and appointment details automatically</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <span class="text-blue-600 font-bold text-lg">✓</span>
+                            <div>
+                                <p class="font-bold">Custom Webhooks</p>
+                                <p class="text-sm text-gray-600">Integrate with Make.com, n8n, or your own APIs</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section class="py-20 bg-white">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <span class="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-sm font-medium">Pricing</span>
+            <h2 class="text-4xl font-bold mt-4">We don't just build it. <span class="text-blue-600">We run it.</span></h2>
+            
+            <div class="grid md:grid-cols-2 gap-6 mt-12 text-left">
+                <div class="border rounded-2xl p-8 hover:shadow-lg transition">
+                    <span class="text-blue-600 font-bold text-sm tracking-wider">STEP 1</span>
+                    <h3 class="text-2xl font-bold mt-2">Custom Build</h3>
+                    <p class="text-gray-600 text-sm mt-3">A one-time investment. We engineer your AI Phone Agent around your workflows and integrations.</p>
+                    <div class="mt-8 pt-6 border-t">
+                        <p class="text-xs text-gray-500">STARTING FROM</p>
+                        <p class="text-4xl font-bold mt-1">$599 <span class="text-lg font-normal text-gray-500">one-time</span></p>
+                    </div>
+                </div>
+                <div class="border border-blue-600 shadow-md rounded-2xl p-8 relative">
+                    <span class="text-blue-600 font-bold text-sm tracking-wider">STEP 2</span>
+                    <h3 class="text-2xl font-bold mt-2">Managed AI</h3>
+                    <p class="text-gray-600 text-sm mt-3">We keep your agent performing: monitoring, maintenance, optimization, and API updates included.</p>
+                    <div class="mt-8 pt-6 border-t">
+                        <p class="text-xs text-gray-500">AFTER YOUR FIRST 60 DAYS</p>
+                        <p class="text-4xl font-bold mt-1">Month-to-month <span class="text-lg font-normal text-gray-500">no lock-in</span></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-8 bg-blue-600 text-white rounded-xl overflow-hidden">
+                <div class="bg-blue-700 py-3 text-sm font-semibold">✓ Platform costs passed through at cost, zero markup</div>
+                <div class="flex justify-around py-4 bg-white text-gray-900 text-sm border-x border-b rounded-b-xl border-gray-200">
+                    <div><span class="text-gray-500">VOICE AI</span><br><b>$0.14-0.20</b>/min</div>
+                    <div><span class="text-gray-500">PHONE NUMBER</span><br><b>$0.01-0.02</b>/min</div>
+                    <div class="text-green-600 font-bold flex items-center gap-1">• No hidden fees</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrations -->
+    <section class="py-12 bg-gray-50 text-center">
+        <span class="bg-blue-100 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">Custom Integrations</span>
+        <h2 class="text-3xl font-bold mt-4 mb-8">Built to work inside your existing systems</h2>
+        
+        <div class="marquee-container">
+            <div class="marquee-content">
+                <span>HubSpot</span>
+                <span>ServiceTitan</span>
+                <span>Make.com</span>
+                <span>n8n</span>
+                <span>OpenAI</span>
+                <span>GoHighLevel</span>
+                <span>Cal.com</span>
+                <span>Salesforce</span>
+                <span>ActiveCampaign</span>
+                <span>Google Calendar</span>
+                <span>HubSpot</span>
+                <span>ServiceTitan</span>
+                <span>Make.com</span>
+                <span>n8n</span>
+                <span>OpenAI</span>
+                <span>GoHighLevel</span>
+                <span>Cal.com</span>
+                <span>Salesforce</span>
+                <span>ActiveCampaign</span>
+                <span>Google Calendar</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section class="py-20 px-4 max-w-5xl mx-auto text-center" id="case-studies">
+        <span class="bg-blue-50 text-blue-600 px-3 py-1 rounded-full text-sm font-medium">Case Studies</span>
+        <h2 class="text-4xl font-bold mt-4 mb-10">Real practices, real results</h2>
+        
+        <div class="bg-blue-600 text-white rounded-3xl p-10 text-left grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <div class="bg-white/20 inline-block px-3 py-1 rounded-full text-sm font-medium mb-4">🦷 Max Dental Group · Featured</div>
+                <p class="text-lg leading-relaxed mb-6">Max Dental Group was drowning in routine calls. Appointment bookings, insurance queries, and recall reminders were eating hours of staff time. They deployed a Beconix AI phone agent and never looked back.</p>
+                <ul class="space-y-3 text-blue-100">
+                    <li class="flex items-center gap-2">✓ 95% of inbound calls fully automated</li>
+                    <li class="flex items-center gap-2">✓ Booking & cancellations handled 24/7</li>
+                    <li class="flex items-center gap-2">✓ Insurance queries resolved without staff</li>
+                </ul>
+            </div>
+            <div class="grid grid-cols-2 gap-4">
+                <div class="bg-blue-500/50 p-6 rounded-xl text-center border border-blue-400/30">
+                    <div class="text-4xl font-bold">95%</div>
+                    <div class="text-xs mt-2 text-blue-100">Calls automated</div>
+                </div>
+                <div class="bg-blue-500/50 p-6 rounded-xl text-center border border-blue-400/30">
+                    <div class="text-4xl font-bold">24/7</div>
+                    <div class="text-xs mt-2 text-blue-100">Coverage</div>
+                </div>
+                <div class="bg-blue-500/50 p-6 rounded-xl text-center border border-blue-400/30">
+                    <div class="text-4xl font-bold">0</div>
+                    <div class="text-xs mt-2 text-blue-100">Missed calls</div>
+                </div>
+                <div class="bg-blue-500/50 p-6 rounded-xl text-center border border-blue-400/30">
+                    <div class="text-4xl font-bold">∞</div>
+                    <div class="text-xs mt-2 text-blue-100">Simultaneous calls</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="py-20 px-4 max-w-4xl mx-auto" id="faq">
+        <h2 class="text-3xl font-bold text-center mb-10">Everything you need to know</h2>
+        
+        <!-- About AI Phone Agents -->
+        <div class="mb-12">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">About AI Phone Agents</p>
+            <div class="space-y-4">
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What are AI Phone Agents? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">AI Phone Agents are intelligent phone systems that can have natural, human-like conversations with your patients. They can answer questions, book appointments, qualify enquiries, and transfer calls to your team, all without sounding robotic or scripted.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">How realistic do they actually sound? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Very. Our agents use the latest voice AI technology to deliver natural-sounding conversations with real-time responses. They handle interruptions, pauses, and complex back-and-forth dialogue just like a trained receptionist would. We'll demo a live call during your discovery session so you can hear it firsthand.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can they handle complex conversations, or just simple scripts? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Our agents go well beyond basic scripts. They can handle objections, ask follow-up questions, navigate multi-step conversations, and adapt based on what the caller says. We build custom conversation flows tailored to your specific practice scenarios.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can the agent handle both inbound and outbound? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Yes. Inbound agents answer and route incoming calls, book appointments, and handle enquiries. Outbound agents can follow up with patients, send appointment reminders, and run recall campaigns, all at scale.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Pricing & Ownership -->
+        <div class="mb-12">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Pricing & Ownership</p>
+            <div class="space-y-4">
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">How much does it cost to build? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Custom builds start from US$599 as a one-time investment. We engineer your AI Phone Agent around your exact workflows, integrations, and patient journeys, then hand it over. You own it outright.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What is Managed AI? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Managed AI is our ongoing service that keeps your agent performing after launch. It includes monitoring, maintenance, optimisation, and updates as your practice evolves. Every build includes 60 days of Managed AI included, then continues month-to-month with no lock-in. Cancel anytime.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What does Managed AI include? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Four things. Monitoring: we watch your agent's performance and catch failures before you notice them. Maintenance: API updates, platform changes, and automation fixes handled by our team. Optimisation: monthly call reviews where we improve responses based on real patient interactions. Adaptation: new staff, new location, new service? We update the agent as your practice evolves.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What are the ongoing platform costs? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Platform costs are passed through at cost with zero markup. Voice AI runs $0.14–$0.20/min and phone numbers cost $0.01–$0.02/min. No hidden fees.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Is this a subscription, or do I own the system? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">You own it outright. The custom build is a one-time investment with no lock-in contracts. Managed AI is optional and month-to-month, so you're never locked in.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What's the ROI compared to hiring staff? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">A single receptionist costs $50,000–$70,000/year and can only handle one call at a time. Your AI Phone Agent handles unlimited simultaneous calls around $0.10/min, works 24/7, and never calls in sick. Most practices see the ROI within the first few months from reduced after-hours staffing costs alone.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Integration & Technical -->
+        <div class="mb-12">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Integration & Technical</p>
+            <div class="space-y-4">
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can it integrate with my existing systems? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Yes. We've built integrations with Cliniko, Jane App, HubSpot, Zoho CRM, Calendly, Google Calendar, Spruce Health, Hotdoc, Medirecords, Acuity, Mindbody, Salesforce, GoHighLevel, and many others. If your system has an API, we can connect it.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can it book appointments directly on my calendar? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Absolutely. Calendar booking is one of the most popular features. The agent checks your availability in real time and books appointments directly, no double-ups, no manual entry.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can the agent transfer calls to a live person? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Yes. You can set rules for when the agent should transfer. For example, urgent clinical questions, high-value enquiries, or specific request types get routed to your team in real time.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can it send texts or emails after a call? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Yes. We can set up automated follow-ups like SMS confirmations, email summaries, or CRM updates triggered immediately after each call.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Implementation -->
+        <div class="mb-12">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Implementation</p>
+            <div class="space-y-4">
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">How long does it take to build? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Typically 2 to 3 weeks. We handle everything from mapping your call flows to building, testing, and deploying your agent. You don't need to configure anything yourself.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What do you need from us to get started? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">We start with a free discovery call to map your exact call flows, patient types, edge cases, and existing tools. From there, we just need access to your systems and any existing scripts or FAQs you want the agent to reference.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What does the testing process look like? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">We run live testing with real patient scenarios before you go live. Every edge case is covered. You'll get to make test calls yourself, provide feedback, and we'll refine until it meets your standards.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Compliance & Security -->
+        <div class="mb-12">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Compliance & Security</p>
+            <div class="space-y-4">
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Is it HIPAA compliant? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Yes. HIPAA compliance isn't a footnote for us, it's our foundation. We use HIPAA-compliant integration layers (including Keragon) to handle PHI safely. Patient data is never used to train models, and conversations are processed, not retained for AI learning.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Does the agent handle clinical decisions? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">No. AI handles admin, not clinical decisions. Any sensitive or clinical question is immediately routed to a qualified human through built-in escalation paths.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Does the agent need to disclose that it's AI? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Regulations vary by region, but we always recommend transparency. We can configure the agent to introduce itself as an AI assistant, which we've found actually builds trust with callers.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Support & Scaling -->
+        <div class="mb-12">
+            <p class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-6">Support & Scaling</p>
+            <div class="space-y-4">
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What happens after the build is complete? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Every build includes 60 days of Managed AI. After that, you can continue month-to-month or run the system independently since you own it fully. Most clients keep Managed AI because the ROI is obvious.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can it handle high call volumes? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Yes. The system can handle unlimited simultaneous calls, so you'll never miss a patient during peak periods. Something that's impossible with a single receptionist.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">Can it scale across multiple locations or use cases? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">Absolutely. Once the core agent is built, we can duplicate and customise it for different locations, departments, or use cases without starting from scratch.</p>
+                </details>
+                <details class="group bg-white border rounded-lg p-4 cursor-pointer">
+                    <summary class="font-bold list-none flex justify-between items-center">What types of practices do you work with? <span class="text-blue-600 group-open:rotate-180 transition">▼</span></summary>
+                    <p class="mt-4 text-gray-600 text-sm">We've built agents for dental practices, physiotherapy clinics, concierge medicine, allied health, home health, and multi-location networks. Each specialty has different workflows, different edge cases, and different tools. We handle all of it.</p>
+                </details>
+            </div>
+        </div>
+
+        <!-- Still Have Questions -->
+        <div class="text-center mt-16 pt-8 border-t">
+            <p class="text-lg font-bold mb-4">Still have questions?</p>
+            <a href="mailto:bilal@beconix.com" class="inline-block bg-blue-600 text-white font-bold py-3 px-8 rounded-full hover:bg-blue-700 transition">Send us an email</a>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-20 px-4 bg-white" id="contact">
+        <div class="max-w-4xl mx-auto">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-4xl font-bold mb-6">Get in touch</h2>
+                    <p class="text-gray-600 mb-8">Have a question or ready to build your AI Phone Agent? Reach out and let's talk about what's possible for your practice.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="text-blue-600 text-2xl">📧</div>
+                            <div>
+                                <p class="font-bold text-gray-900">Email</p>
+                                <a href="mailto:bilal@beconix.com" class="text-blue-600 hover:underline">bilal@beconix.com</a>
+                            </div>
+                        </div>
+                        <div class="flex items-start gap-4">
+                            <div class="text-blue-600 text-2xl">📍</div>
+                            <div>
+                                <p class="font-bold text-gray-900">Address</p>
+                                <p class="text-gray-600">75 Franklin Square<br>Elmont, NY 11001</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-8 rounded-2xl border border-gray-200">
+                    <h3 class="text-2xl font-bold mb-6">Send us a message</h3>
+                    <form id="contactForm" class="space-y-4">
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Full Name</label>
+                            <input type="text" id="contactName" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Jane Smith">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Company Name</label>
+                            <input type="text" id="contactCompany" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Acme Corp">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Position</label>
+                            <input type="text" id="contactPosition" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="Owner / Manager">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Work Email</label>
+                            <input type="email" id="contactEmail" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="jane@acme.com">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold text-gray-600 mb-1">Phone Number</label>
+                            <input type="tel" id="contactPhone" required class="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none" placeholder="555-0123">
+                        </div>
+                        <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-lg hover:bg-blue-700 transition mt-6">Send Message</button>
+                        <p id="contactStatus" class="text-sm text-center hidden mt-2"></p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fixed Bottom CTA -->
+    <div class="fixed bottom-0 left-0 w-full bg-white border-t border-gray-200 p-4 flex justify-between items-center shadow-[0_-10px_30px_rgba(0,0,0,0.05)] z-50">
+        <div class="hidden md:block">
+            <p class="font-bold">Ready to automate your front desk?</p>
+            <p class="text-xs text-gray-500">Book a quick 20-minute discovery call.</p>
+        </div>
+        <a href="https://cal.com/beconix-bilal/lets-talk" target="_blank" class="w-full md:w-auto bg-blue-600 text-white font-bold py-3 px-8 rounded-lg text-center hover:bg-blue-700 transition shadow-lg">Book a Free Consultation</a>
+    </div>
+
+    <script>
+        // Form Submission to Flask App
+        function submitFormToAPI(formId, statusId, endpoint) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = form.querySelector('button');
+                const status = document.getElementById(statusId);
+                
+                btn.innerHTML = 'Sending...';
+                btn.disabled = true;
+
+                const data = {
+                    name: form.querySelector('[id*="Name"]').value,
+                    company: form.querySelector('[id*="Company"]').value,
+                    position: form.querySelector('[id*="Position"]').value,
+                    email: form.querySelector('[id*="Email"]').value,
+                    phone: form.querySelector('[id*="Phone"]').value
+                };
+
+                try {
+                    const res = await fetch(endpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    const json = await res.json();
+                    
+                    status.classList.remove('hidden', 'text-red-500');
+                    status.classList.add('text-green-600');
+                    status.innerText = json.message;
+                    form.reset();
+                } catch (err) {
+                    status.classList.remove('hidden', 'text-green-600');
+                    status.classList.add('text-red-500');
+                    status.innerText = 'Something went wrong. Please try again.';
+                } finally {
+                    btn.innerHTML = formId === 'demoForm' ? 'Call Amelia Now &rarr;' : 'Send Message';
+                    btn.disabled = false;
+                }
+            });
+        }
+
+        // Initialize both forms
+        submitFormToAPI('demoForm', 'formStatus', '/api/demo-request');
+        submitFormToAPI('contactForm', 'contactStatus', '/api/demo-request');
+
+        // 4-Step Animation Loop
+        document.addEventListener("DOMContentLoaded", () => {
+            let currentStep = 1;
+            const totalSteps = 4;
+            setInterval(() => {
+                document.querySelectorAll('.step-item').forEach(el => el.classList.remove('active'));
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                currentStep = currentStep >= totalSteps ? 1 : currentStep + 1;
+            }, 2500);
+        });
+
+        // Smooth scroll navigation
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', (e) => {
+                const href = link.getAttribute('href');
+                if (href.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(href);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
