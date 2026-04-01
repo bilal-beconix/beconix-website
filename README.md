@@ -103,15 +103,27 @@ WEBHOOK_URL=https://hook.us2.make.com/your-webhook-key
 ## File Structure
 
 ```
-.
-├── app.py                 # Flask application
-├── requirements.txt       # Python dependencies
+beconix-website/
+├── app.py                      # Flask application (main backend)
+├── requirements.txt            # Python dependencies
+├── Procfile                    # Deployment configuration
+├── render.yaml                 # Render-specific config
+├── README.md                   # This file
+├── docs/                       # Documentation
+│   ├── DEPLOYMENT_GUIDE.md    # All deployment options
+│   ├── DEPLOY_NOW.md          # Step-by-step deployment
+│   ├── QUICK_START.md         # Quick overview
+│   ├── NAMECHEAP_DNS_SETUP.md # DNS configuration
+│   └── FIX_REPORT.md          # Bug fixes and improvements
+├── tests/                      # Test files
+│   ├── test_fixed_app.py      # Flask app tests
+│   ├── test_logo.py           # Logo display tests
+│   ├── test_mobile.py         # Mobile responsiveness tests
+│   └── test_webhook.py        # Webhook integration tests
 ├── templates/
-│   └── index.html        # Main website
-├── static/
-│   └── logo.svg          # Brand logo
-├── leads_log.txt         # Local lead backup
-└── README.md             # This file
+│   └── index.html             # Main website (HTML + Tailwind)
+└── static/
+    └── logo.svg               # Brand logo (SVG)
 ```
 
 ## Contact
