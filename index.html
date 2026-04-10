@@ -916,7 +916,9 @@
     </div>
 
     <script>
-        // Form Submission to Flask App
+        // Form submission endpoint for static-host deployment
+        const MAKE_WEBHOOK_ENDPOINT = 'https://hook.us2.make.com/5zii1syjfkdyjkja664p2j73qjgb8ekm';
+
         function submitFormToAPI(formId, statusId, endpoint) {
             const form = document.getElementById(formId);
             if (!form) return;
@@ -961,8 +963,8 @@
         }
 
         // Initialize both forms
-        submitFormToAPI('demoForm', 'formStatus', '/api/demo-request');
-        submitFormToAPI('contactForm', 'contactStatus', '/api/demo-request');
+        submitFormToAPI('demoForm', 'formStatus', MAKE_WEBHOOK_ENDPOINT);
+        submitFormToAPI('contactForm', 'contactStatus', MAKE_WEBHOOK_ENDPOINT);
 
         // 4-Step Animation Loop
         document.addEventListener("DOMContentLoaded", () => {

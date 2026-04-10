@@ -1,19 +1,20 @@
 # Documentation
 
-This folder contains all documentation, guides, and deployment instructions.
+This project now runs as a static website.
 
 ## Files
 
-- **DEPLOYMENT_GUIDE.md** - Comprehensive deployment options (Render, Railway, PythonAnywhere)
-- **DEPLOY_NOW.md** - Step-by-step deployment for bilal-beconix
-- **QUICK_START.md** - Quick overview of the entire deployment process
-- **NAMECHEAP_DNS_SETUP.md** - Detailed Namecheap DNS configuration guide
-- **NAMECHEAP_FINAL_STEPS.md** - Final DNS steps for beconix.com
-- **FIX_REPORT.md** - Initial bug fixes and code structure improvements
-- **TEST_REPORT.md** - Test results and validation reports
+- DEPLOY_STATIC.md: Static hosting deployment steps
+- DNS_NAMECHEAP.md: Namecheap DNS records for custom domain
+- TROUBLESHOOTING.md: Common issues and fixes
 
-## Quick Links
+## Architecture
 
-- **Live Website**: https://www.beconix.com
-- **GitHub Repo**: https://github.com/bilal-beconix/beconix-website
-- **Render Dashboard**: https://dashboard.render.com
+- Static page: /index.html
+- Static assets: /static
+- Form submit target: Make webhook (direct browser POST)
+
+## Important
+
+The old Flask backend flow was removed from this repository.
+If you need hidden webhook URLs in the future, add an edge proxy (for example Cloudflare Worker).
